@@ -1,6 +1,10 @@
 generator client {
   provider = "prisma-client-js"
   previewFeatures = ["postgresqlExtensions"]
+  // Moteurs explicites : "native" pour le dev local (Windows),
+  // "debian-openssl-3.0.x" pour les images Docker (bookworm).
+  // Sans ceci, Prisma devine openssl-1.1.x et crash (libssl.so.1.1 absente).
+  binaryTargets = ["native", "debian-openssl-3.0.x"]
 }
 
 datasource db {
