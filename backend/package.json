@@ -14,6 +14,7 @@
     "prisma:seed": "ts-node prisma/seed.ts",
     "db:migrate:local": "node scripts/assert-local-db.js && prisma migrate dev",
     "db:seed:local": "node scripts/assert-local-db.js && ts-node prisma/seed.ts",
+    "db:rotate-admin": "ts-node scripts/rotate-admin-password.ts",
     "test:e2e": "cross-env DATABASE_URL=postgresql://postgres:postgres@127.0.0.1:5432/ism_agi_test jest --config test/jest-e2e.json --runInBand",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
     "lint:ci": "eslint \"{src,apps,libs,test}/**/*.ts\""
