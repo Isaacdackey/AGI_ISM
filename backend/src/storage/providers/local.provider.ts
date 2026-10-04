@@ -3,6 +3,7 @@ import { Readable } from 'stream';
 import * as path from 'path';
 import * as fs from 'fs';
 import { StorageProvider } from '../storage.interface';
+import { getStorageDriver } from '../../config/r2.config';
 import { ALLOWED_EXTS } from '../../resources/file-types.config';
 
 /**
@@ -26,9 +27,13 @@ export class LocalProvider implements StorageProvider {
       }
       dir = path.resolve(base, dir);
     }
-    if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
     this.uploadDir = path.resolve(dir);
-    this.logger.warn(`LocalProvider actif — dir=${this.uploadDir} (dev/test uniquement)`);
+    // En mode R2 (prod), ne jamais toucher au disque au démarrage : le conteneur
+    // tourne en non-root sur FS éphémère. Dossier créé uniquement en mode local.
+    if (getStorageDriver() === 'local') {
+      if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
+      this.logger.warn(`LocalProvider actif — dir=${this.uploadDir} (dev/test uniquement)`);
+    }
   }
 
   private assertSafeKey(key: string): string {
