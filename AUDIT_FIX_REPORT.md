@@ -102,8 +102,14 @@ scan antivirus uploads, CAPTCHA login, pagination `users.findAll`, compteur via 
 tests unitaires purs (couverture via e2e : **31/31 verts** en local).
 
 ## 7. Suivi post-rapport (CI)
-- Premier run CI : `npm ci` backend en échec sous npm 10 (résolution peer `@emnapi/*`
-  divergente de npm 11 local, `@emnapi/core@1.11.3` réclamé hors lock).
-- Correctif : `overrides` `@emnapi/core`/`@emnapi/runtime` → `1.10.0` exact (déjà dans le
-  lock, plus aucun choix de version possible) + palier `npm install -g npm@11` dans le
-  job backend. `npm ci` local vert après changement.
+- Premier run CI : `npm ci` backend en échec sous npm 10 / Linux alors qu'il passait
+  en local (npm 11 / Windows) : la résolution des peers optionnels
+  (`@emnapi/*` via la chaîne native `unrs/resolver-binding`) diverge selon
+  l'OS et la version de npm (`@emnapi/core@1.11.3` puis `@emnapi/runtime@1.10.0`
+  réclamés hors lock).
+- Correctif définitif : lock **régénéré sous Linux** (`docker node:20-slim`,
+  `npm install --package-lock-only`), qui ajoute les entrées manquantes
+  (`node_modules/@emnapi/runtime` 1.10.0, conforme aux `overrides`), puis
+  `npm ci` **rejoué à l'identique dans le même conteneur** (réplique exacte de
+  l'étape CI : Linux + npm 10) : vert. Palier `npm@11` retiré (devenu inutile).
+  `npm ci` Windows + `build` + `lint:ci` re-vérifiés après coup.
