@@ -1,10 +1,14 @@
 # ---- build ----
 FROM node:20-bookworm-slim AS build
+# CLI OpenSSL requis pour que Prisma détecte openssl-3.0.x
+# (sans lui : fallback silencieux vers openssl-1.1.x puis crash au runtime).
+RUN apt-get update -y && apt-get install -y openssl && rm -rf /var/lib/apt/lists/*
 WORKDIR /app
 COPY package.json package-lock.json ./
 RUN npm ci
 COPY prisma ./prisma
-RUN npx prisma generate
+# Échoue explicitement si le moteur 3.0.x n'est pas généré (au lieu d'un crash runtime obscur).
+RUN npx prisma generate && ls node_modules/.prisma/client | grep -q "debian-openssl-3.0.x"
 COPY . .
 RUN npm run build
 
