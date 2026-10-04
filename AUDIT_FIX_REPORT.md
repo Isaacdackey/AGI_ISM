@@ -100,3 +100,10 @@ Aucune dépendance runtime ajoutée.
 `strict` global, `any` framework (passport/Nest), refonte streaming→signed-URLs par défaut,
 scan antivirus uploads, CAPTCHA login, pagination `users.findAll`, compteur via file d'attente,
 tests unitaires purs (couverture via e2e : **31/31 verts** en local).
+
+## 7. Suivi post-rapport (CI)
+- Premier run CI : `npm ci` backend en échec sous npm 10 (résolution peer `@emnapi/*`
+  divergente de npm 11 local, `@emnapi/core@1.11.3` réclamé hors lock).
+- Correctif : `overrides` `@emnapi/core`/`@emnapi/runtime` → `1.10.0` exact (déjà dans le
+  lock, plus aucun choix de version possible) + palier `npm install -g npm@11` dans le
+  job backend. `npm ci` local vert après changement.
