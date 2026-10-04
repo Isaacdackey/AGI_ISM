@@ -22,5 +22,5 @@ COPY prisma ./prisma
 USER app
 EXPOSE 4000
 # Les migrations ne sont PAS exécutées au démarrage (commande séparée : npx prisma migrate deploy).
-HEALTHCHECK --interval=30s --timeout=5s --retries=3 CMD node -e "fetch('http://127.0.0.1:4000/api/health').then(function(r){if(!r.ok)process.exit(1)}).catch(function(){process.exit(1)})"
+HEALTHCHECK --interval=30s --timeout=5s --retries=3 CMD node -e "fetch('http://127.0.0.1:'+(process.env.PORT||'4000')+'/api/health').then(function(r){if(!r.ok)process.exit(1)}).catch(function(){process.exit(1)})"
 CMD ["node", "dist/main"]
