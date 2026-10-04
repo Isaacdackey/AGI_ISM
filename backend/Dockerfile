@@ -16,7 +16,10 @@ RUN npm run build
 FROM node:20-bookworm-slim AS runtime
 ENV NODE_ENV=production
 WORKDIR /app
-RUN groupadd -r app && useradd -r -g app app
+# OpenSSL CLI requis AUSSI au runtime : sans lui, Prisma retombe sur openssl-1.1.x
+# alors que le moteur généré est en 3.0.x (bookworm) => crash au démarrage.
+RUN apt-get update -y && apt-get install -y openssl && rm -rf /var/lib/apt/lists/* \
+  && groupadd -r app && useradd -r -g app app
 COPY package.json package-lock.json ./
 RUN npm ci --omit=dev && npm cache clean --force
 COPY --from=build /app/dist ./dist
