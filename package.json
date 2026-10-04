@@ -1,0 +1,12 @@
+{
+  "private": true,
+  "scripts": {
+    "pack": "git archive --format=zip -o ../ism_agi_clean.zip HEAD"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.39.5",
+    "eslint": "^9.39.5",
+    "eslint-plugin-react": "^7.37.5",
+    "globals": "^17.12.0"
+  }
+}

@@ -1,0 +1,44 @@
+services:
+  postgres:
+    image: postgres:15
+    environment:
+      # Usage local uniquement (dev + tests e2e). Ne jamais exposer en production.
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
+      POSTGRES_DB: ism_agi
+    ports:
+      - "127.0.0.1:5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./backend/docker/init-test-db.sh:/docker-entrypoint-initdb.d/init-test-db.sh:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d ism_agi"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  # Profil "app" : non démarré par défaut (dev local via npm run dev).
+  backend:
+    build: ./backend
+    profiles: ["app"]
+    ports:
+      - "127.0.0.1:4000:4000"
+    env_file:
+      - ./backend/.env
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  frontend:
+    build: ./frontend
+    profiles: ["app"]
+    ports:
+      - "127.0.0.1:3000:3000"
+    environment:
+      NEXT_PUBLIC_API_URL: ${NEXT_PUBLIC_API_URL:-/api}
+      BACKEND_URL: ${BACKEND_URL:-http://backend:4000}
+    depends_on:
+      - backend
+
+volumes:
+  pgdata:
