@@ -46,12 +46,28 @@ export default function ResourceDetail({ params }: { params: { slug: string } })
       const res = await fetch(url, { credentials: 'include' as RequestCredentials });
       if (!res.ok) { const t = await res.text(); throw new Error(t || 'Fichier introuvable'); }
       const blob = await res.blob();
-      const blobUrl = URL.createObjectURL(blob);
       const ext = (r.fileName?.split('.').pop() || 'pdf').toLowerCase().replace(/[^a-z0-9]/g, '') || 'pdf';
+      const filename = `${r.slug}.${ext}`;
+      // iPhone/Safari ignore souvent l'attribut `download` et ouvrent le PDF :
+      // la Web Share API avec fichiers ouvre la feuille de partage
+      // (l'utilisateur choisit "Enregistrer dans Fichiers").
+      try {
+        const file = new File([blob], filename, { type: blob.type || 'application/pdf' });
+        const nav = navigator as Navigator & { canShare?: (d?: { files?: File[] }) => boolean; share?: (d: { files: File[]; title?: string }) => Promise<void> };
+        if (nav.canShare?.({ files: [file] })) {
+          await nav.share({ files: [file], title: r.title });
+          return;
+        }
+      } catch (e) {
+        // Partage annulé par l'utilisateur : ne pas tomber sur l'ancre.
+        if ((e as Error)?.name === 'AbortError') return;
+      }
+      const blobUrl = URL.createObjectURL(blob);
       const a = document.createElement('a');
-      a.href = blobUrl; a.download = `${r.slug}.${ext}`;
+      a.href = blobUrl; a.download = filename;
       document.body.appendChild(a); a.click(); a.remove();
-      URL.revokeObjectURL(blobUrl);
+      // Révocation différée : immédiate, certains navigateurs annulent le téléchargement.
+      setTimeout(() => URL.revokeObjectURL(blobUrl), 4000);
     } catch { setPreviewError("Impossible de télécharger le document. Veuillez réessayer."); }
   };
 
@@ -82,6 +98,9 @@ export default function ResourceDetail({ params }: { params: { slug: string } })
               <a href={previewBlob || resourcePreviewUrl(r.id)} target="_blank" rel="noopener noreferrer" className="border border-sand text-ink px-5 sm:px-6 min-h-[44px] sm:min-h-[48px] h-auto py-3 rounded-full inline-flex items-center justify-center gap-2 font-semibold text-[14px] sm:text-[15px] hover:border-terracotta-action hover:text-terracotta-pressed bg-white transition w-full sm:w-auto leading-tight text-center"><Eye className="w-[16px] h-[16px] shrink-0" /> Aperçu</a>
             </div>
             <p className="text-[11.5px] text-ink-secondary mt-3">
+              Sur iPhone, le bouton ouvre la feuille de partage : choisissez « Enregistrer dans Fichiers ».
+            </p>
+            <p className="text-[11.5px] text-ink-secondary mt-1">
               Contenu inapproprié ? <a href={`mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(`Signalement : ${r.title} (${r.slug})`)}`} className="underline hover:text-terracotta-pressed">Signaler un contenu</a>
             </p>
           </div>
