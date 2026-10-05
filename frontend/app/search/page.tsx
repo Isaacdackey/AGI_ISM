@@ -32,7 +32,7 @@ function SearchContent() {
       <Filters onChange={setFilters} initial={{search:q}} />
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
         {resources.map(r=><ResourceCard key={r.id} r={r}/>)}
-        {resources.length===0 && <p className="text-ink-secondary col-span-full text-center py-10 bg-white rounded-[12px] border border-sand text-[13.5px]">Aucun résultat.</p>}
+        {resources.length===0 && <p className="text-ink-secondary col-span-full text-center py-10 bg-surface rounded-[12px] border border-sand text-[13.5px]">Aucun résultat.</p>}
       </div>
     </div>
   );

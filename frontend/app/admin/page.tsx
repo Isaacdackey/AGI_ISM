@@ -164,7 +164,7 @@ export default function AdminPage() {
     } catch (err: unknown) { setModMsg(err instanceof ApiError ? err.message : "Action impossible."); }
   };
 
-  if (!user || (user.role !== 'ADMIN' && user.role !== 'MODERATOR')) return <div className="bg-white rounded-[12px] border border-sand p-6 sm:p-8 text-center text-[13.5px] leading-[1.5]">Accès réservé aux modérateurs/admins. <Link href="/login" className="text-terracotta hover:text-terracotta-pressed">Se connecter</Link></div>;
+  if (!user || (user.role !== 'ADMIN' && user.role !== 'MODERATOR')) return <div className="bg-surface rounded-[12px] border border-sand p-6 sm:p-8 text-center text-[13.5px] leading-[1.5]">Accès réservé aux modérateurs/admins. <Link href="/login" className="text-brand hover:text-brand-pressed">Se connecter</Link></div>;
 
   return (
     <div className="space-y-6 overflow-hidden">
@@ -172,14 +172,14 @@ export default function AdminPage() {
       {msg && <p role="status" aria-live="polite" className="text-[13.5px] text-center py-2 bg-sand-light border border-sand rounded-[8px] break-words px-3">{msg}</p>}
       {stats && (
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
-          <div className="bg-white rounded-[12px] border border-sand p-4 text-center"><div className="text-xl sm:text-2xl font-bold text-terracotta font-poppins">{stats.schools}</div><div className="text-[11.5px] text-ink-secondary">Écoles</div></div>
-          <div className="bg-white rounded-[12px] border border-sand p-4 text-center"><div className="text-xl sm:text-2xl font-bold text-green font-poppins">{stats.subjects}</div><div className="text-[11.5px] text-ink-secondary">Matières</div></div>
-          <div className="bg-white rounded-[12px] border border-sand p-4 text-center"><div className="text-xl sm:text-2xl font-bold text-ink font-poppins">{stats.resources}</div><div className="text-[11.5px] text-ink-secondary">Ressources</div></div>
-          <div className="bg-white rounded-[12px] border border-sand p-4 text-center"><div className="text-xl sm:text-2xl font-bold text-terracotta font-poppins">{stats.pending}</div><div className="text-[11.5px] text-ink-secondary">En attente</div></div>
+          <div className="bg-surface rounded-[12px] border border-sand p-4 text-center"><div className="text-xl sm:text-2xl font-bold text-brand font-poppins">{stats.schools}</div><div className="text-[11.5px] text-ink-secondary">Écoles</div></div>
+          <div className="bg-surface rounded-[12px] border border-sand p-4 text-center"><div className="text-xl sm:text-2xl font-bold text-success font-poppins">{stats.subjects}</div><div className="text-[11.5px] text-ink-secondary">Matières</div></div>
+          <div className="bg-surface rounded-[12px] border border-sand p-4 text-center"><div className="text-xl sm:text-2xl font-bold text-ink font-poppins">{stats.resources}</div><div className="text-[11.5px] text-ink-secondary">Ressources</div></div>
+          <div className="bg-surface rounded-[12px] border border-sand p-4 text-center"><div className="text-xl sm:text-2xl font-bold text-brand font-poppins">{stats.pending}</div><div className="text-[11.5px] text-ink-secondary">En attente</div></div>
         </div>
       )}
 
-      <div className="bg-white rounded-[12px] border border-sand p-4 sm:p-6 overflow-hidden">
+      <div className="bg-surface rounded-[12px] border border-sand p-4 sm:p-6 overflow-hidden">
         <h2 className="font-semibold text-ink mb-3 font-poppins text-[14px] sm:text-[15px] leading-tight">Ressources en attente ({pending.length}) - dépôt modérateur, validation admin</h2>
         {user.role !== 'ADMIN' && <p className="text-[11.5px] text-ink-secondary mb-3">En tant que modérateur vous déposez, seul l&apos;admin peut approuver/rejeter.</p>}
         <div className="space-y-3">
@@ -190,7 +190,7 @@ export default function AdminPage() {
                 <div className="text-[11.5px] text-ink-secondary break-words">{r.school?.name} - {r.subject?.name} - {r.level} {r.semester}</div>
               </div>
               <div className="flex flex-wrap gap-2 shrink-0">
-                <Link href={`/ressources/${r.slug}`} target="_blank" rel="noopener noreferrer" className="px-3 py-1.5 border border-sand rounded-full text-[11.5px] bg-white hover:border-ink hover:text-ink transition min-h-[32px] inline-flex items-center">Voir</Link>
+                <Link href={`/ressources/${r.slug}`} target="_blank" rel="noopener noreferrer" className="px-3 py-1.5 border border-sand rounded-full text-[11.5px] bg-surface hover:border-inverse hover:text-ink transition min-h-[32px] inline-flex items-center">Voir</Link>
                 {user.role === 'ADMIN' ? (
                   <>
                     <button onClick={() => approve(r.id)} className="px-3 py-1.5 bg-green text-white rounded-full text-[11.5px] hover:opacity-90 transition min-h-[32px]">Approuver</button>
@@ -207,18 +207,18 @@ export default function AdminPage() {
         </div>
       </div>
 
-      <div className="bg-white rounded-[12px] border border-sand p-4 sm:p-6 overflow-hidden space-y-3">
+      <div className="bg-surface rounded-[12px] border border-sand p-4 sm:p-6 overflow-hidden space-y-3">
         <h2 className="font-semibold text-ink font-poppins text-[14px] sm:text-[15px]">Toutes les ressources</h2>
         <div className="flex flex-wrap gap-2">
           <label htmlFor="admin-res-status" className="sr-only">Filtrer par statut</label>
-          <select id="admin-res-status" value={resStatus} onChange={e => { setResStatus(e.target.value); setResPage(1); }} className="border border-sand rounded-[8px] px-3 py-2 text-[13.5px] bg-white min-h-[40px]">
+          <select id="admin-res-status" value={resStatus} onChange={e => { setResStatus(e.target.value); setResPage(1); }} className="border border-sand rounded-[8px] px-3 py-2 text-[13.5px] bg-surface min-h-[40px]">
             <option value="">Tous statuts</option>
             <option value="PENDING">En attente</option>
             <option value="APPROVED">Approuvées</option>
             <option value="REJECTED">Rejetées</option>
           </select>
           <label htmlFor="admin-res-school" className="sr-only">Filtrer par école</label>
-          <select id="admin-res-school" value={resSchool} onChange={e => { setResSchool(e.target.value); setResPage(1); }} className="border border-sand rounded-[8px] px-3 py-2 text-[13.5px] bg-white min-h-[40px]">
+          <select id="admin-res-school" value={resSchool} onChange={e => { setResSchool(e.target.value); setResPage(1); }} className="border border-sand rounded-[8px] px-3 py-2 text-[13.5px] bg-surface min-h-[40px]">
             <option value="">Toutes écoles</option>
             {schools.map(s => <option key={s.id} value={s.id}>{s.name}</option>)}
           </select>
@@ -234,7 +234,7 @@ export default function AdminPage() {
                   <span className="text-[11.5px] bg-gray-warm border border-sand px-2 py-0.5 rounded-full">{r.status}</span>
                   {canEditModerator(user, r) && (
                     <>
-                      <button onClick={() => setEditing({ id: r.id, title: r.title, description: r.description || "", type: r.type, level: r.level || "", semester: r.semester || "", year: r.year ? String(r.year) : "", tags: (r.tags || []).join(", ") })} className="px-3 py-1 border border-sand rounded-full text-[11.5px] hover:border-ink min-h-[32px]">Modifier</button>
+                      <button onClick={() => setEditing({ id: r.id, title: r.title, description: r.description || "", type: r.type, level: r.level || "", semester: r.semester || "", year: r.year ? String(r.year) : "", tags: (r.tags || []).join(", ") })} className="px-3 py-1 border border-sand rounded-full text-[11.5px] hover:border-inverse min-h-[32px]">Modifier</button>
                       <button onClick={() => delResource(r.id, r.title)} className="px-3 py-1 bg-gray-warm border border-sand rounded-full text-[11.5px] hover:bg-sand min-h-[32px]">Supprimer</button>
                     </>
                   )}
@@ -245,7 +245,7 @@ export default function AdminPage() {
                   <label htmlFor={`edit-title-${r.id}`} className="sr-only">Titre</label>
                   <input id={`edit-title-${r.id}`} value={editing.title} onChange={e => setEditing({ ...editing, title: e.target.value })} className="border border-sand rounded-[8px] px-3 py-2 text-[13.5px] min-h-[40px]" />
                   <label htmlFor={`edit-type-${r.id}`} className="sr-only">Type</label>
-                  <select id={`edit-type-${r.id}`} value={editing.type} onChange={e => setEditing({ ...editing, type: e.target.value })} className="border border-sand rounded-[8px] px-3 py-2 text-[13.5px] bg-white min-h-[40px]">
+                  <select id={`edit-type-${r.id}`} value={editing.type} onChange={e => setEditing({ ...editing, type: e.target.value })} className="border border-sand rounded-[8px] px-3 py-2 text-[13.5px] bg-surface min-h-[40px]">
                     {["COURS", "TD", "TP", "CONTROLE", "EXAMEN", "DEVOIR", "PROJET", "CORRECTION", "FICHE_REVISION", "ANNALE", "AUTRE"].map(t => <option key={t} value={t}>{t}</option>)}
                   </select>
                   <label htmlFor={`edit-desc-${r.id}`} className="sr-only">Description</label>
@@ -253,7 +253,7 @@ export default function AdminPage() {
                   <label htmlFor={`edit-tags-${r.id}`} className="sr-only">Tags séparés par virgules</label>
                   <input id={`edit-tags-${r.id}`} value={editing.tags} onChange={e => setEditing({ ...editing, tags: e.target.value })} placeholder="Tags (virgules)" className="border border-sand rounded-[8px] px-3 py-2 text-[13.5px] min-h-[40px] sm:col-span-2" />
                   <div className="flex gap-2 sm:col-span-2">
-                    <button onClick={saveResource} className="px-4 py-2 bg-ink text-white rounded-full text-[12px] font-semibold min-h-[40px]">Enregistrer</button>
+                    <button onClick={saveResource} className="px-4 py-2 bg-inverse text-white rounded-full text-[12px] font-semibold min-h-[40px]">Enregistrer</button>
                     <button onClick={() => setEditing(null)} className="px-4 py-2 border border-sand rounded-full text-[12px] min-h-[40px]">Annuler</button>
                   </div>
                 </div>
@@ -270,7 +270,7 @@ export default function AdminPage() {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
-        <div className="bg-white rounded-[12px] border border-sand p-4 sm:p-6 space-y-3 overflow-hidden">
+        <div className="bg-surface rounded-[12px] border border-sand p-4 sm:p-6 space-y-3 overflow-hidden">
           <h3 className="font-semibold font-poppins text-[15px] text-ink">Écoles ({schools.length})</h3>
           <div className="space-y-2 max-h-[320px] overflow-y-auto">
             {schools.map(s => (
@@ -289,7 +289,7 @@ export default function AdminPage() {
                     <label htmlFor={`school-desc-${s.id}`} className="sr-only">Description de l&apos;école</label>
                     <input id={`school-desc-${s.id}`} value={editSchool.description} onChange={e => setEditSchool({ ...editSchool, description: e.target.value })} className="border border-sand rounded-[8px] px-3 py-2 text-[13.5px] min-h-[40px]" />
                     <div className="flex gap-2">
-                      <button onClick={() => saveSchool(s.id)} className="px-3 py-1.5 bg-ink text-white rounded-full text-[12px] min-h-[36px]">OK</button>
+                      <button onClick={() => saveSchool(s.id)} className="px-3 py-1.5 bg-inverse text-white rounded-full text-[12px] min-h-[36px]">OK</button>
                       <button onClick={() => setEditSchoolId(null)} className="px-3 py-1.5 border border-sand rounded-full text-[12px] min-h-[36px]">Annuler</button>
                     </div>
                   </div>
@@ -305,19 +305,19 @@ export default function AdminPage() {
               <label htmlFor="new-school-slug" className="sr-only">Slug de la nouvelle école</label>
               <input id="new-school-slug" required placeholder="Slug (ex: ecole-xyz)" value={newSchool.slug} onChange={e => setNewSchool({ ...newSchool, slug: e.target.value })} className="w-full border border-sand rounded-[8px] px-3 py-2.5 text-[13.5px] min-h-[44px]" />
               <label htmlFor="new-school-campus" className="sr-only">Campus de la nouvelle école</label>
-              <select id="new-school-campus" required value={newSchool.campusId} onChange={e => setNewSchool({ ...newSchool, campusId: e.target.value })} className="w-full border border-sand rounded-[8px] px-3 py-2.5 text-[13.5px] bg-white min-h-[44px]">
+              <select id="new-school-campus" required value={newSchool.campusId} onChange={e => setNewSchool({ ...newSchool, campusId: e.target.value })} className="w-full border border-sand rounded-[8px] px-3 py-2.5 text-[13.5px] bg-surface min-h-[44px]">
                 <option value="">Campus</option>
                 {campuses.map(c => <option key={c.id} value={c.id}>{c.name}</option>)}
               </select>
-              <button className="w-full bg-ink text-white min-h-[44px] py-2 rounded-full text-[14px] font-semibold">Créer école</button>
+              <button className="w-full bg-inverse text-white min-h-[44px] py-2 rounded-full text-[14px] font-semibold">Créer école</button>
             </form>
           )}
         </div>
 
-        <div className="bg-white rounded-[12px] border border-sand p-4 sm:p-6 space-y-3 overflow-hidden">
+        <div className="bg-surface rounded-[12px] border border-sand p-4 sm:p-6 space-y-3 overflow-hidden">
           <h3 className="font-semibold font-poppins text-[15px] text-ink">Matières</h3>
           <label htmlFor="admin-subject-school" className="sr-only">Filtrer les matières par école</label>
-          <select id="admin-subject-school" value={newSubject.schoolId} onChange={e => setNewSubject({ ...newSubject, schoolId: e.target.value })} className="w-full border border-sand rounded-[8px] px-3 py-2.5 text-[13.5px] bg-white min-h-[44px]">
+          <select id="admin-subject-school" value={newSubject.schoolId} onChange={e => setNewSubject({ ...newSubject, schoolId: e.target.value })} className="w-full border border-sand rounded-[8px] px-3 py-2.5 text-[13.5px] bg-surface min-h-[44px]">
             <option value="">Toutes écoles</option>
             {schools.map(s => <option key={s.id} value={s.id}>{s.name}</option>)}
           </select>
@@ -338,7 +338,7 @@ export default function AdminPage() {
                     <label htmlFor={`subject-desc-${s.id}`} className="sr-only">Description de la matière</label>
                     <input id={`subject-desc-${s.id}`} value={editSubject.description} onChange={e => setEditSubject({ ...editSubject, description: e.target.value })} className="border border-sand rounded-[8px] px-3 py-2 text-[13.5px] min-h-[40px]" />
                     <div className="flex gap-2">
-                      <button onClick={() => saveSubject(s.id)} className="px-3 py-1.5 bg-ink text-white rounded-full text-[12px] min-h-[36px]">OK</button>
+                      <button onClick={() => saveSubject(s.id)} className="px-3 py-1.5 bg-inverse text-white rounded-full text-[12px] min-h-[36px]">OK</button>
                       <button onClick={() => setEditSubjectId(null)} className="px-3 py-1.5 border border-sand rounded-full text-[12px] min-h-[36px]">Annuler</button>
                     </div>
                   </div>
@@ -353,14 +353,14 @@ export default function AdminPage() {
               <input id="new-subject-name" required placeholder="Nom" value={newSubject.name} onChange={e => setNewSubject({ ...newSubject, name: e.target.value })} className="w-full border border-sand rounded-[8px] px-3 py-2.5 text-[13.5px] min-h-[44px]" />
               <label htmlFor="new-subject-slug" className="sr-only">Slug de la nouvelle matière</label>
               <input id="new-subject-slug" required placeholder="Slug (ex: maths-l1)" value={newSubject.slug} onChange={e => setNewSubject({ ...newSubject, slug: e.target.value })} className="w-full border border-sand rounded-[8px] px-3 py-2.5 text-[13.5px] min-h-[44px]" />
-              <button className="w-full bg-ink text-white min-h-[44px] py-2 rounded-full text-[14px] font-semibold">Créer matière (école du filtre)</button>
+              <button className="w-full bg-inverse text-white min-h-[44px] py-2 rounded-full text-[14px] font-semibold">Créer matière (école du filtre)</button>
             </form>
           )}
         </div>
       </div>
 
       {user.role === 'ADMIN' && (
-        <div className="bg-white rounded-[12px] border border-sand p-4 sm:p-6 overflow-hidden space-y-4">
+        <div className="bg-surface rounded-[12px] border border-sand p-4 sm:p-6 overflow-hidden space-y-4">
           <h3 className="font-semibold font-poppins text-[15px] text-ink">Gestion des modérateurs (ADMIN uniquement)</h3>
           <form onSubmit={createModerator} className="grid grid-cols-1 md:grid-cols-3 gap-3">
             <label htmlFor="new-mod-name" className="sr-only">Nom complet du modérateur</label>
@@ -371,14 +371,14 @@ export default function AdminPage() {
           </form>
           {modMsg && <p role="status" className="text-[13.5px] text-center py-2 bg-sand-light border border-sand rounded-[8px] break-words px-3">{modMsg}</p>}
           {tempPassword && (
-            <div className="bg-amber-50 border border-amber-200 rounded-[8px] p-3">
-              <p className="text-[13.5px] font-semibold text-amber-800">Mot de passe temporaire (affiché une seule fois) :</p>
+            <div className="bg-amber-50 dark:bg-amber-950/60 border border-amber-200 dark:border-amber-800 dark:border-amber-800 rounded-[8px] p-3">
+              <p className="text-[13.5px] font-semibold text-amber-800 dark:text-amber-200">Mot de passe temporaire (affiché une seule fois) :</p>
               <div className="flex items-center gap-2 mt-1">
-                <code className="flex-1 bg-white border border-amber-200 rounded px-3 py-2 text-[13.5px] break-all select-all">{showTemp ? tempPassword : '••••••••••••'}</code>
-                <button onClick={() => setShowTemp(v => !v)} className="px-3 py-2 bg-white border border-amber-200 rounded-full text-[12px] shrink-0" aria-label={showTemp ? "Masquer le mot de passe" : "Révéler le mot de passe"}>{showTemp ? 'Masquer' : 'Révéler'}</button>
-                <button onClick={() => { navigator.clipboard.writeText(tempPassword); setTimeout(() => { setTempPassword(null); setShowTemp(false); }, 30000); }} className="px-3 py-2 bg-ink text-white rounded-full text-[12px] shrink-0">Copier</button>
+                <code className="flex-1 bg-surface border border-amber-200 dark:border-amber-800 rounded px-3 py-2 text-[13.5px] break-all select-all">{showTemp ? tempPassword : '••••••••••••'}</code>
+                <button onClick={() => setShowTemp(v => !v)} className="px-3 py-2 bg-surface border border-amber-200 dark:border-amber-800 rounded-full text-[12px] shrink-0" aria-label={showTemp ? "Masquer le mot de passe" : "Révéler le mot de passe"}>{showTemp ? 'Masquer' : 'Révéler'}</button>
+                <button onClick={() => { navigator.clipboard.writeText(tempPassword); setTimeout(() => { setTempPassword(null); setShowTemp(false); }, 30000); }} className="px-3 py-2 bg-inverse text-white rounded-full text-[12px] shrink-0">Copier</button>
               </div>
-              <p className="text-[11.5px] text-amber-700 mt-1">Transmettez-le hors canal, il s&apos;effacera après copie (30s).</p>
+              <p className="text-[11.5px] text-amber-700 dark:text-amber-300 mt-1">Transmettez-le hors canal, il s&apos;effacera après copie (30s).</p>
             </div>
           )}
           <div>
@@ -388,7 +388,7 @@ export default function AdminPage() {
                 <div key={m.id} className="flex flex-wrap justify-between items-center gap-2 border border-sand rounded-[8px] px-3 py-2">
                   <span className="text-[13.5px] text-ink break-words">{m.name} <span className="text-ink-secondary">— {m.email}</span></span>
                   <span className="flex items-center gap-2">
-                    <span className={`text-[11.5px] px-2 py-0.5 rounded-full border ${m.isActive ? "bg-green/10 border-green text-green" : "bg-gray-warm border-sand text-ink-secondary"}`}>{m.isActive ? "Actif" : "Désactivé"}</span>
+                    <span className={`text-[11.5px] px-2 py-0.5 rounded-full border ${m.isActive ? "bg-success/10 border-success text-success" : "bg-gray-warm border-sand text-ink-secondary"}`}>{m.isActive ? "Actif" : "Désactivé"}</span>
                     <button onClick={() => toggleModerator(m)} className="px-2 py-1 border border-sand rounded-full text-[11.5px] min-h-[32px]">{m.isActive ? "Désactiver" : "Activer"}</button>
                     <button onClick={() => resetModPassword(m)} className="px-2 py-1 border border-sand rounded-full text-[11.5px] min-h-[32px]">Reset mdp</button>
                   </span>

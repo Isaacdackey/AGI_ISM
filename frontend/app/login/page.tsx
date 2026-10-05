@@ -34,7 +34,7 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="max-w-md mx-auto bg-white rounded-[12px] border border-sand p-6 sm:p-8 mt-4 sm:mt-8 w-full">
+    <div className="max-w-md mx-auto bg-surface rounded-[12px] border border-sand p-6 sm:p-8 mt-4 sm:mt-8 w-full">
       <h1 className="text-[20px] sm:text-[21px] font-bold text-ink font-poppins">Espace modération</h1>
       <p className="text-[13.5px] text-ink-secondary mt-1 leading-[1.5]">Réservé aux modérateurs et administrateurs. Les étudiants consultent et téléchargent sans connexion.</p>
       <p className="text-[11.5px] text-ink-secondary mt-1">Utilisez les identifiants fournis par l&apos;administrateur.</p>
@@ -53,7 +53,7 @@ export default function LoginPage() {
           </div>
         </div>
         {err && (
-          <div role="alert" className="flex items-start gap-2 bg-red-50 border border-red-200 text-red-700 rounded-[8px] px-3 py-2.5 text-[13.5px] leading-[1.4]">
+          <div role="alert" className="flex items-start gap-2 bg-red-50 dark:bg-red-950/50 border border-red-200 dark:border-red-900 text-red-700 dark:text-red-300 rounded-[8px] px-3 py-2.5 text-[13.5px] leading-[1.4]">
             <AlertCircle className="w-4 h-4 mt-0.5 shrink-0" />
             <span className="break-words">{err}</span>
           </div>

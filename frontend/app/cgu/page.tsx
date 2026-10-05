@@ -4,7 +4,7 @@ export const metadata = { title: "CGU — AGI ISM" };
 
 export default function Cgu() {
   return (
-    <div className="max-w-2xl mx-auto bg-white rounded-[12px] border border-sand p-6 sm:p-8 space-y-4 text-[13.5px] leading-[1.6] text-ink">
+    <div className="max-w-2xl mx-auto bg-surface rounded-[12px] border border-sand p-6 sm:p-8 space-y-4 text-[13.5px] leading-[1.6] text-ink">
       <h1 className="text-[20px] font-bold font-poppins">Conditions générales d&apos;utilisation</h1>
       <p className="text-ink-secondary">Dernière mise à jour : octobre 2026.</p>
 
@@ -38,7 +38,7 @@ export default function Cgu() {
       <h2 className="font-semibold font-poppins text-[15px]">4. Signalement et retrait (sous 72&nbsp;h)</h2>
       <p>
         Tout contenu portant atteinte à vos droits peut être signalé à{" "}
-        <a href={`mailto:${CONTACT_EMAIL}`} className="text-terracotta hover:underline break-all">
+        <a href={`mailto:${CONTACT_EMAIL}`} className="text-brand hover:underline break-all">
           {CONTACT_EMAIL}
         </a>{" "}
         en précisant le titre et le lien de la ressource. Après vérification, le contenu
@@ -60,7 +60,7 @@ export default function Cgu() {
         déposés. Un cookie de session strictement nécessaire (`jwt`, HttpOnly, Secure,
         SameSite=Strict) maintient la connexion des modérateurs et administrateurs.
         Pour exercer vos droits (accès, rectification, suppression), écrivez à{" "}
-        <a href={`mailto:${CONTACT_EMAIL}`} className="text-terracotta hover:underline break-all">
+        <a href={`mailto:${CONTACT_EMAIL}`} className="text-brand hover:underline break-all">
           {CONTACT_EMAIL}
         </a>
         .

@@ -6,7 +6,7 @@ const INSTAGRAM_URL = "https://www.instagram.com/kazi_prod29";
 
 export default function MentionsLegales() {
   return (
-    <div className="max-w-2xl mx-auto bg-white rounded-[12px] border border-sand p-6 sm:p-8 space-y-4 text-[13.5px] leading-[1.6] text-ink">
+    <div className="max-w-2xl mx-auto bg-surface rounded-[12px] border border-sand p-6 sm:p-8 space-y-4 text-[13.5px] leading-[1.6] text-ink">
       <h1 className="text-[20px] font-bold font-poppins">Mentions légales</h1>
       <p className="text-ink-secondary">
         AGI ISM — Bibliothèque académique : plateforme de partage de ressources pédagogiques
@@ -22,12 +22,12 @@ export default function MentionsLegales() {
         Conception et maintenance : <strong>Kazi&nbsp;Prod</strong>.
         <br />
         Instagram :{" "}
-        <a href={INSTAGRAM_URL} target="_blank" rel="noopener noreferrer" className="text-terracotta hover:underline break-all">
+        <a href={INSTAGRAM_URL} target="_blank" rel="noopener noreferrer" className="text-brand hover:underline break-all">
           @kazi_prod29
         </a>
         <br />
         Email :{" "}
-        <a href={`mailto:${CONTACT_EMAIL}`} className="text-terracotta hover:underline break-all">
+        <a href={`mailto:${CONTACT_EMAIL}`} className="text-brand hover:underline break-all">
           {CONTACT_EMAIL}
         </a>
       </p>
@@ -41,7 +41,7 @@ export default function MentionsLegales() {
 
       <h2 className="font-semibold font-poppins text-[15px]">Contact</h2>
       <p>
-        <a href={`mailto:${CONTACT_EMAIL}`} className="text-terracotta hover:underline break-all">
+        <a href={`mailto:${CONTACT_EMAIL}`} className="text-brand hover:underline break-all">
           {CONTACT_EMAIL}
         </a>
       </p>

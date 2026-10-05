@@ -33,10 +33,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               <div className="flex flex-col gap-1 md:items-end md:text-right">
                 <div>2026-2027 AGI ISM. Tous droits réservés.</div>
                 <div>Réalisé par <span className="font-semibold text-ink">Kazi Prod</span></div>
-                <div>Contact : <a href={`mailto:${CONTACT_EMAIL}`} className="font-semibold text-ink hover:text-terracotta-pressed hover:underline break-all">{CONTACT_EMAIL}</a></div>
+                <div>Contact : <a href={`mailto:${CONTACT_EMAIL}`} className="font-semibold text-ink hover:text-brand-pressed hover:underline break-all">{CONTACT_EMAIL}</a></div>
                 <div className="flex gap-3 md:justify-end">
-                  <Link href="/mentions-legales" className="hover:text-terracotta-pressed hover:underline">Mentions légales</Link>
-                  <Link href="/cgu" className="hover:text-terracotta-pressed hover:underline">CGU</Link>
+                  <Link href="/mentions-legales" className="hover:text-brand-pressed hover:underline">Mentions légales</Link>
+                  <Link href="/cgu" className="hover:text-brand-pressed hover:underline">CGU</Link>
                 </div>
               </div>
             </div>

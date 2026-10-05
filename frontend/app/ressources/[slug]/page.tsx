@@ -86,7 +86,7 @@ export default function ResourceDetail({ params }: { params: { slug: string } })
       <Breadcrumbs items={[{ label: "Accueil", href: "/" }, { label: r.school?.name || "", href: `/ecoles/${r.school?.slug || ""}` }, { label: r.subject?.name || "", href: `/matieres/${r.subject?.slug || ""}` }, { label: r.type }, { label: r.title }]} />
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6">
         <div className="lg:col-span-2 space-y-4 min-w-0">
-          <div className="bg-white rounded-[12px] border border-sand p-4 sm:p-6 overflow-hidden">
+          <div className="bg-surface rounded-[12px] border border-sand p-4 sm:p-6 overflow-hidden">
             <div className="flex flex-wrap gap-2 mb-3">
               <span className="text-[11.5px] bg-terracotta text-white px-2 py-1 rounded-full shrink-0">{r.type}</span>
               {r.level && <span className="text-[11.5px] bg-gray-warm border border-sand px-2 py-1 rounded-full text-ink-secondary shrink-0">{r.level}</span>}
@@ -104,7 +104,7 @@ export default function ResourceDetail({ params }: { params: { slug: string } })
             {r.tags && r.tags.length > 0 && <div className="flex gap-1.5 mt-3 flex-wrap">{r.tags.map((t: string) => <span key={t} className="text-[11.5px] bg-gray-warm border border-sand px-2 py-1 rounded-full flex items-center gap-1 text-ink-secondary shrink-0"><Tag className="w-3 h-3 shrink-0" />{t}</span>)}</div>}
             <div className="flex flex-col sm:flex-row gap-3 mt-6">
               <button onClick={handleDownload} className="bg-terracotta-action text-white px-5 sm:px-6 min-h-[44px] sm:min-h-[48px] h-auto py-3 rounded-full inline-flex items-center justify-center gap-2 font-semibold text-[14px] sm:text-[15px] hover:bg-terracotta-pressed transition w-full sm:w-auto leading-tight"><Download className="w-[16px] h-[16px] shrink-0" /> Télécharger</button>
-              <a href={previewBlob || resourcePreviewUrl(r.id)} target="_blank" rel="noopener noreferrer" className="border border-sand text-ink px-5 sm:px-6 min-h-[44px] sm:min-h-[48px] h-auto py-3 rounded-full inline-flex items-center justify-center gap-2 font-semibold text-[14px] sm:text-[15px] hover:border-terracotta-action hover:text-terracotta-pressed bg-white transition w-full sm:w-auto leading-tight text-center"><Eye className="w-[16px] h-[16px] shrink-0" /> Aperçu</a>
+              <a href={previewBlob || resourcePreviewUrl(r.id)} target="_blank" rel="noopener noreferrer" className="border border-sand text-ink px-5 sm:px-6 min-h-[44px] sm:min-h-[48px] h-auto py-3 rounded-full inline-flex items-center justify-center gap-2 font-semibold text-[14px] sm:text-[15px] hover:border-terracotta-action hover:text-brand-pressed bg-surface transition w-full sm:w-auto leading-tight text-center"><Eye className="w-[16px] h-[16px] shrink-0" /> Aperçu</a>
             </div>
             {isTouch && (
               <p className="text-[11.5px] text-ink-secondary mt-3">
@@ -112,15 +112,15 @@ export default function ResourceDetail({ params }: { params: { slug: string } })
               </p>
             )}
             <p className="text-[11.5px] text-ink-secondary mt-1">
-              Contenu inapproprié ? <a href={`mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(`Signalement : ${r.title} (${r.slug})`)}`} className="underline hover:text-terracotta-pressed">Signaler un contenu</a>
+              Contenu inapproprié ? <a href={`mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(`Signalement : ${r.title} (${r.slug})`)}`} className="underline hover:text-brand-pressed">Signaler un contenu</a>
             </p>
           </div>
-          <div className="bg-white rounded-[12px] border border-sand p-2 min-h-[300px] sm:min-h-[400px] flex items-center justify-center overflow-hidden">
+          <div className="bg-surface rounded-[12px] border border-sand p-2 min-h-[300px] sm:min-h-[400px] flex items-center justify-center overflow-hidden">
             {previewLoading && <div className="py-10 text-ink-secondary text-[13.5px]">Chargement aperçu...</div>}
             {previewError && (
               <div className="text-center py-8 px-4">
-                <p className="text-[13.5px] text-red-600">{previewError}</p>
-                <button onClick={loadPreview} className="mt-3 inline-flex items-center gap-2 border border-sand px-4 min-h-[40px] rounded-full text-[13.5px] hover:border-ink"><RefreshCw className="w-4 h-4 shrink-0"/> Réessayer</button>
+                <p className="text-[13.5px] text-red-600 dark:text-red-400">{previewError}</p>
+                <button onClick={loadPreview} className="mt-3 inline-flex items-center gap-2 border border-sand px-4 min-h-[40px] rounded-full text-[13.5px] hover:border-inverse"><RefreshCw className="w-4 h-4 shrink-0"/> Réessayer</button>
               </div>
             )}
             {!previewLoading && !previewError && previewBlob && (
@@ -133,7 +133,7 @@ export default function ResourceDetail({ params }: { params: { slug: string } })
           </div>
         </div>
         <div className="space-y-4 min-w-0">
-          <div className="bg-white rounded-[12px] border border-sand p-4 sm:p-5 overflow-hidden">
+          <div className="bg-surface rounded-[12px] border border-sand p-4 sm:p-5 overflow-hidden">
             <h3 className="font-semibold text-ink mb-3 font-poppins text-[15px]">Informations</h3>
             <dl className="text-[13.5px] space-y-2">
               <div className="flex justify-between gap-2"><dt className="text-ink-secondary shrink-0">École</dt><dd className="font-medium text-ink text-right break-words">{r.school?.name}</dd></div>

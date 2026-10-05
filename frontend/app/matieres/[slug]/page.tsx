@@ -27,17 +27,17 @@ export default function SubjectPage({ params }: { params: { slug: string } }) {
   return (
     <div className="space-y-6 overflow-hidden">
       <Breadcrumbs items={[{label:"Accueil",href:"/"},{label:"Écoles",href:"/ecoles"},{label:subject.school?.name, href:`/ecoles/${subject.school?.slug}`},{label:subject.name}]} />
-      <div className="bg-white rounded-[12px] border border-sand p-4 sm:p-6 overflow-hidden">
+      <div className="bg-surface rounded-[12px] border border-sand p-4 sm:p-6 overflow-hidden">
         <h1 className="text-[20px] sm:text-[21px] font-bold text-ink font-poppins leading-tight break-words">{subject.name}</h1>
         <p className="text-[13.5px] text-ink-secondary mt-1 leading-[1.5] break-words">{subject.school?.name} - {subject.description}</p>
         <div className="flex gap-2 mt-4 flex-wrap">
-          <button onClick={()=>setFilterType("")} className={`px-3 py-2 rounded-full text-[13.5px] border min-h-[36px] sm:min-h-[40px] transition shrink-0 ${!filterType?"bg-ink text-white border-ink":"bg-white border-sand hover:border-ink text-ink"}`}>Tous</button>
+          <button onClick={()=>setFilterType("")} className={`px-3 py-2 rounded-full text-[13.5px] border min-h-[36px] sm:min-h-[40px] transition shrink-0 ${!filterType?"bg-inverse text-white border-inverse":"bg-surface border-sand hover:border-inverse text-ink"}`}>Tous</button>
           {types.map(t=>(
-            <button key={t} onClick={()=>setFilterType(t)} className={`px-3 py-1.5 sm:py-2 rounded-full text-[12px] sm:text-[13.5px] border min-h-[36px] sm:min-h-[40px] transition shrink-0 ${filterType===t?"bg-terracotta-action text-white border-terracotta-action hover:bg-terracotta-pressed":"bg-white border-sand hover:border-terracotta-action hover:text-terracotta-pressed text-ink"}`}>{t}</button>
+            <button key={t} onClick={()=>setFilterType(t)} className={`px-3 py-1.5 sm:py-2 rounded-full text-[12px] sm:text-[13.5px] border min-h-[36px] sm:min-h-[40px] transition shrink-0 ${filterType===t?"bg-terracotta-action text-white border-terracotta-action hover:bg-terracotta-pressed":"bg-surface border-sand hover:border-terracotta-action hover:text-brand-pressed text-ink"}`}>{t}</button>
           ))}
         </div>
       </div>
-      {Object.entries(grouped).length===0 && <p className="text-ink-secondary bg-white rounded-[12px] border border-sand p-6 text-center text-[13.5px]">Aucune ressource pour ce filtre.</p>}
+      {Object.entries(grouped).length===0 && <p className="text-ink-secondary bg-surface rounded-[12px] border border-sand p-6 text-center text-[13.5px]">Aucune ressource pour ce filtre.</p>}
       {Object.entries(grouped).map(([type, list])=>(
         <div key={type}>
           <h2 className="font-semibold text-ink mb-3 font-poppins text-[15px] sm:text-[16px]">{type} <span className="text-ink-secondary font-normal">({list.length})</span></h2>

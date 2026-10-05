@@ -1,9 +1,9 @@
 import Link from "next/link";
 import { FileText, Download, Tag } from "lucide-react";
 export function ResourceCard({ r }: { r:any }) {
-  const typeColor: Record<string,string> = { COURS:"bg-green text-white", TD:"bg-gray-warm text-ink border border-sand", EXAMEN:"bg-terracotta text-white", CONTROLE:"bg-ink text-white" };
+  const typeColor: Record<string,string> = { COURS:"bg-green text-white", TD:"bg-gray-warm text-ink border border-sand", EXAMEN:"bg-terracotta text-white", CONTROLE:"bg-inverse text-white" };
   return (
-    <Link href={`/ressources/${r.slug}`} className="bg-white rounded-[12px] border border-sand p-4 hover:border-terracotta-action/30 transition block overflow-hidden">
+    <Link href={`/ressources/${r.slug}`} className="bg-surface rounded-[12px] border border-sand p-4 hover:border-terracotta-action/30 transition block overflow-hidden">
       <div className="flex flex-wrap items-center gap-2 mb-2">
         <span className={`text-[11.5px] px-2 py-1 rounded-full font-medium shrink-0 ${typeColor[r.type]||'bg-gray-warm text-ink border border-sand'}`}>{r.type}</span>
         {r.level && <span className="text-[11.5px] bg-gray-warm border border-sand px-2 py-1 rounded-full text-ink-secondary shrink-0">{r.level}</span>}
