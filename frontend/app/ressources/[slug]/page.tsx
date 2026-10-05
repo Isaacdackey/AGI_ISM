@@ -15,6 +15,12 @@ export default function ResourceDetail({ params }: { params: { slug: string } })
   const previewBlobRef = useRef<string | null>(null);
   const [previewError, setPreviewError] = useState<string | null>(null);
   const [previewLoading, setPreviewLoading] = useState(false);
+  // Tactile (téléphones/tablettes) uniquement : sur PC, le partage Windows
+  // s'ouvrirait à la place du téléchargement direct.
+  const [isTouch, setIsTouch] = useState(false);
+  useEffect(() => {
+    setIsTouch(window.matchMedia?.('(pointer: coarse)').matches ?? false);
+  }, []);
   useEffect(() => { api.resource(params.slug).then(setR).catch(() => {}); }, [params.slug]);
   const loadPreview = () => {
     if (!r) return;
@@ -48,19 +54,22 @@ export default function ResourceDetail({ params }: { params: { slug: string } })
       const blob = await res.blob();
       const ext = (r.fileName?.split('.').pop() || 'pdf').toLowerCase().replace(/[^a-z0-9]/g, '') || 'pdf';
       const filename = `${r.slug}.${ext}`;
-      // iPhone/Safari ignore souvent l'attribut `download` et ouvrent le PDF :
-      // la Web Share API avec fichiers ouvre la feuille de partage
-      // (l'utilisateur choisit "Enregistrer dans Fichiers").
-      try {
-        const file = new File([blob], filename, { type: blob.type || 'application/pdf' });
-        const nav = navigator as Navigator & { canShare?: (d?: { files?: File[] }) => boolean; share?: (d: { files: File[]; title?: string }) => Promise<void> };
-        if (nav.canShare?.({ files: [file] })) {
-          await nav.share({ files: [file], title: r.title });
-          return;
+      // iPhone/Android : Safari ignore souvent l'attribut `download` et ouvre le PDF.
+      // Sur tactile uniquement, la Web Share API ouvre la feuille de partage
+      // (l'utilisateur choisit "Enregistrer dans Fichiers"). Sur PC on garde
+      // le téléchargement direct (sinon Windows ouvre son panneau Partager).
+      if (isTouch) {
+        try {
+          const file = new File([blob], filename, { type: blob.type || 'application/pdf' });
+          const nav = navigator as Navigator & { canShare?: (d?: { files?: File[] }) => boolean; share?: (d: { files: File[]; title?: string }) => Promise<void> };
+          if (nav.canShare?.({ files: [file] })) {
+            await nav.share({ files: [file], title: r.title });
+            return;
+          }
+        } catch (e) {
+          // Partage annulé par l'utilisateur : ne pas tomber sur l'ancre.
+          if ((e as Error)?.name === 'AbortError') return;
         }
-      } catch (e) {
-        // Partage annulé par l'utilisateur : ne pas tomber sur l'ancre.
-        if ((e as Error)?.name === 'AbortError') return;
       }
       const blobUrl = URL.createObjectURL(blob);
       const a = document.createElement('a');
@@ -97,9 +106,11 @@ export default function ResourceDetail({ params }: { params: { slug: string } })
               <button onClick={handleDownload} className="bg-terracotta-action text-white px-5 sm:px-6 min-h-[44px] sm:min-h-[48px] h-auto py-3 rounded-full inline-flex items-center justify-center gap-2 font-semibold text-[14px] sm:text-[15px] hover:bg-terracotta-pressed transition w-full sm:w-auto leading-tight"><Download className="w-[16px] h-[16px] shrink-0" /> Télécharger</button>
               <a href={previewBlob || resourcePreviewUrl(r.id)} target="_blank" rel="noopener noreferrer" className="border border-sand text-ink px-5 sm:px-6 min-h-[44px] sm:min-h-[48px] h-auto py-3 rounded-full inline-flex items-center justify-center gap-2 font-semibold text-[14px] sm:text-[15px] hover:border-terracotta-action hover:text-terracotta-pressed bg-white transition w-full sm:w-auto leading-tight text-center"><Eye className="w-[16px] h-[16px] shrink-0" /> Aperçu</a>
             </div>
-            <p className="text-[11.5px] text-ink-secondary mt-3">
-              Sur iPhone, le bouton ouvre la feuille de partage : choisissez « Enregistrer dans Fichiers ».
-            </p>
+            {isTouch && (
+              <p className="text-[11.5px] text-ink-secondary mt-3">
+                Sur téléphone, le bouton ouvre la feuille de partage : choisissez « Enregistrer dans Fichiers ».
+              </p>
+            )}
             <p className="text-[11.5px] text-ink-secondary mt-1">
               Contenu inapproprié ? <a href={`mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(`Signalement : ${r.title} (${r.slug})`)}`} className="underline hover:text-terracotta-pressed">Signaler un contenu</a>
             </p>
