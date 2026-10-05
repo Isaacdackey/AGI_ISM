@@ -14,10 +14,14 @@ COPY backend/ ./
 RUN npm run build
 
 # ---- frontend build (NEXT_PUBLIC_API_URL=/api gravé au build : même origine) ----
+# BACKEND_URL gravé AUSSI au build : Next bake les rewrites dans le standalone,
+# la valeur runtime seule ne suffit pas. Le backend interne est toujours 127.0.0.1:4000.
 FROM node:20-bookworm-slim AS frontend-build
 WORKDIR /build/frontend
 ENV NEXT_TELEMETRY_DISABLED=1
 ENV NEXT_PUBLIC_API_URL=/api
+ENV BACKEND_URL=http://127.0.0.1:4000
+ENV BACKEND_PORT=4000
 COPY frontend/package.json frontend/package-lock.json ./
 RUN npm ci
 COPY frontend/ ./
