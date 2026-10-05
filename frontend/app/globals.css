@@ -3,53 +3,80 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Source unique de vérité : canaux RGB (les opacités Tailwind /10, /80… exigent
+   ce format). :root = thème clair, .dark = thème sombre. Contraste AA (≥4,5:1)
+   vérifié pour ink, ink-secondary, brand et success sur fond paper en sombre. */
 :root {
-  --terracotta: #C1502E;
-  --terracotta-action: #E05A2B;
-  --terracotta-pressed: #9A3D22;
-  --gold: #D9A441;
-  --green: #2F6E6A;
-  --ink: #242021;
-  --ink-secondary: #5B5250;
-  --sand: #E2D6C6;
-  --sand-light: #F4EBE0;
-  --gray-warm: #F7F5F2;
-  --white: #FFFFFF;
-  --line: #E2D6C6;
+  --paper: 255 255 255;
+  --surface: 255 255 255;
+  --ink: 36 32 33;
+  --ink-secondary: 91 82 80;
+  --sand: 226 214 198;
+  --sand-light: 244 235 224;
+  --gray-warm: 247 245 242;
+  --brand: 193 80 46;
+  --brand-pressed: 154 61 34;
+  --success: 47 110 106;
+  --inverse: 36 32 33;
+  color-scheme: light;
+}
+.dark {
+  --paper: 23 20 20;
+  --surface: 33 29 30;
+  --ink: 243 237 230;
+  --ink-secondary: 184 173 168;
+  --sand: 58 51 50;
+  --sand-light: 42 37 38;
+  --gray-warm: 30 26 27;
+  --brand: 232 128 95;
+  --brand-pressed: 240 162 132;
+  --success: 123 200 164;
+  --inverse: 36 32 33;
+  color-scheme: dark;
 }
 
 /* Typographie charte : Poppins titres/chiffres 600-700, Jakarta corps 400-700 */
 * { font-family: 'Plus Jakarta Sans', sans-serif; }
 h1,h2,h3,h4,h5 { font-family: 'Poppins', sans-serif; line-height: 1.2; }
-body { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 13.5px; line-height: 1.5; color: var(--ink); background: var(--white); }
+body { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 13.5px; line-height: 1.5; color: rgb(var(--ink)); background: rgb(var(--paper)); }
 p, li, span, div { line-height: 1.5; }
 
+::selection { background: #C1502E; color: #fff; }
+.dark ::selection { background: #E8805F; color: #171414; }
+
+/* Champs natifs (ceux sans classe bg explicite) : fond/texte/bordure suivent le thème.
+   Les classes Tailwind explicites (bg-transparent, bg-surface…) restent prioritaires. */
+input, select, textarea { background-color: rgb(var(--surface)); color: rgb(var(--ink)); }
+select option { background-color: rgb(var(--surface)); color: rgb(var(--ink)); }
+input::placeholder, textarea::placeholder { color: rgb(var(--ink-secondary) / 0.75); }
+
 /* Échelle */
-.text-page-title { font-family: 'Poppins', sans-serif; font-weight: 700; font-size: 21px; line-height: 1.2; color: var(--ink); }
+.text-page-title { font-family: 'Poppins', sans-serif; font-weight: 700; font-size: 21px; line-height: 1.2; color: rgb(var(--ink)); }
 .text-card-title { font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 15px; line-height: 1.2; }
 .text-button { font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 600; font-size: 15px; }
 .text-body { font-size: 13.5px; font-weight: 400; line-height: 1.5; }
-.text-meta { font-size: 11.5px; font-weight: 400; line-height: 1.5; color: var(--ink-secondary); }
+.text-meta { font-size: 11.5px; font-weight: 400; line-height: 1.5; color: rgb(var(--ink-secondary)); }
 
 /* Composants – rayons et élévation charte */
 @layer components {
-  .btn-primary { @apply bg-[var(--terracotta-action)] text-white rounded-[24px] h-[48px] px-6 inline-flex items-center justify-center gap-2 font-semibold text-[15px] border border-transparent; min-height: 44px; }
-  .btn-primary:hover { background: var(--terracotta-pressed); }
-  .btn-primary:active { background: var(--terracotta-pressed); }
-  .btn-secondary { @apply bg-white text-[var(--ink)] rounded-[24px] h-[48px] px-6 inline-flex items-center justify-center gap-2 font-semibold text-[15px] border border-[var(--sand)]; min-height: 44px; }
-  .btn-secondary:hover { border-color: var(--terracotta-action); color: var(--terracotta-pressed); }
-  .card { @apply bg-white rounded-[12px] border border-[var(--sand)] p-4; }
-  .card-tinted { @apply bg-[var(--sand-light)] rounded-[12px] border border-[var(--sand)] p-4; }
-  .input-field { @apply rounded-[8px] border border-[var(--sand)] px-4 py-3 text-[13.5px] bg-white outline-none; }
-  .input-field:focus { @apply border-[var(--terracotta-action)] ring-1 ring-[var(--terracotta-action)]; }
-  .badge-verified { @apply bg-[var(--green)] text-white rounded-full px-2.5 py-1 text-[11.5px] font-medium; }
-  .badge-urgent { @apply bg-[var(--terracotta)] text-white rounded-full px-2.5 py-1 text-[11.5px] font-medium; }
-  .badge-planned { @apply bg-[var(--sand-light)] text-[var(--ink)] border border-[var(--sand)] rounded-full px-2.5 py-1 text-[11.5px] font-medium; }
-  .badge-new { @apply bg-[var(--ink)] text-white rounded-full px-2.5 py-1 text-[11.5px] font-medium; }
+  .btn-primary { @apply bg-terracotta-action text-white rounded-[24px] h-[48px] px-6 inline-flex items-center justify-center gap-2 font-semibold text-[15px] border border-transparent; min-height: 44px; }
+  .btn-primary:hover { @apply bg-terracotta-pressed; }
+  .btn-primary:active { @apply bg-terracotta-pressed; }
+  .btn-secondary { @apply bg-surface text-ink rounded-[24px] h-[48px] px-6 inline-flex items-center justify-center gap-2 font-semibold text-[15px] border border-sand; min-height: 44px; }
+  .btn-secondary:hover { @apply border-terracotta-action text-brand-pressed; }
+  .card { @apply bg-surface rounded-[12px] border border-sand p-4; }
+  .card-tinted { @apply bg-sand-light rounded-[12px] border border-sand p-4; }
+  .input-field { @apply rounded-[8px] border border-sand px-4 py-3 text-[13.5px] bg-surface text-ink outline-none; }
+  .input-field:focus { @apply border-terracotta-action ring-1 ring-terracotta-action; }
+  .input-field::placeholder { color: rgb(var(--ink-secondary) / 0.75); }
+  .badge-verified { @apply bg-green text-white rounded-full px-2.5 py-1 text-[11.5px] font-medium; }
+  .badge-urgent { @apply bg-terracotta text-white rounded-full px-2.5 py-1 text-[11.5px] font-medium; }
+  .badge-planned { @apply bg-sand-light text-ink border border-sand rounded-full px-2.5 py-1 text-[11.5px] font-medium; }
+  .badge-new { @apply bg-inverse text-white rounded-full px-2.5 py-1 text-[11.5px] font-medium; }
 }
 
 /* Iconographie Lucide 1.8px – géré via class lucide, tailles 16/20/22 */
 .lucide { stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
 
 /* Focus visible (accessibilité clavier) */
-:focus-visible { outline: 2px solid var(--terracotta-action); outline-offset: 2px; }
+:focus-visible { outline: 2px solid #E05A2B; outline-offset: 2px; }
