@@ -23,10 +23,10 @@ export default function SchoolDetail({ params }: { params: { slug: string } }) {
         <div className="min-w-0 flex-1">
           <h1 className="text-[20px] sm:text-2xl font-bold text-ink font-poppins leading-tight break-words">{school.name}</h1>
           <p className="text-[13.5px] sm:text-[14px] text-ink-secondary mt-1 leading-[1.5]">{school.description}</p>
-          <p className="text-[11.5px] sm:text-[12px] text-ink-secondary mt-2">{school.campus?.name} - {subjects.length} matières</p>
+          <p className="text-[11.5px] sm:text-[12px] text-ink-secondary mt-2">{school.campus?.name} - {subjects.length} filières</p>
         </div>
       </div>
-      <h2 className="text-[18px] sm:text-lg font-semibold text-ink font-poppins">Matières</h2>
+      <h2 className="text-[18px] sm:text-lg font-semibold text-ink font-poppins">Filières</h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
         {subjects.map(sub=>(
           <Link key={sub.id} href={`/matieres/${sub.slug}`} className="bg-surface rounded-[12px] border border-sand p-4 hover:shadow-sm hover:border-terracotta-action/20 transition overflow-hidden">
@@ -35,7 +35,7 @@ export default function SchoolDetail({ params }: { params: { slug: string } }) {
             <div className="text-[11.5px] text-ink-secondary mt-2 flex items-center gap-1"><FileText className="w-3 h-3 shrink-0"/>{sub._count?.resources||0} ressources</div>
           </Link>
         ))}
-        {subjects.length===0 && <p className="text-ink-secondary text-[13.5px] col-span-full">Aucune matière pour cette école.</p>}
+        {subjects.length===0 && <p className="text-ink-secondary text-[13.5px] col-span-full">Aucune filière pour cette école.</p>}
       </div>
     </div>
   );

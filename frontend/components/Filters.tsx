@@ -53,9 +53,9 @@ export function Filters({ onChange, initial }: Props) {
         <option value="">Toutes écoles</option>
         {schools.map(s=><option key={s.id} value={s.id}>{s.name}</option>)}
       </select>
-      <label htmlFor="filters-subject" className="sr-only">Matière</label>
+      <label htmlFor="filters-subject" className="sr-only">Filière</label>
       <select id="filters-subject" value={subjectId} onChange={e=>setSubjectId(e.target.value)} className="border border-sand rounded-[8px] px-3 sm:px-4 py-2.5 text-[13.5px] bg-surface focus:border-terracotta-action outline-none disabled:bg-gray-warm min-h-[40px] flex-1 sm:flex-none min-w-[130px]" disabled={!schoolId}>
-        <option value="">Toutes matières</option>
+        <option value="">Toutes filières</option>
         {subjects.map(s=><option key={s.id} value={s.id}>{s.name}</option>)}
       </select>
       <label htmlFor="filters-type" className="sr-only">Type</label>

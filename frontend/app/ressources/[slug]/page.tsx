@@ -137,7 +137,7 @@ export default function ResourceDetail({ params }: { params: { slug: string } })
             <h3 className="font-semibold text-ink mb-3 font-poppins text-[15px]">Informations</h3>
             <dl className="text-[13.5px] space-y-2">
               <div className="flex justify-between gap-2"><dt className="text-ink-secondary shrink-0">École</dt><dd className="font-medium text-ink text-right break-words">{r.school?.name}</dd></div>
-              <div className="flex justify-between gap-2"><dt className="text-ink-secondary shrink-0">Matière</dt><dd className="font-medium text-ink text-right break-words">{r.subject?.name}</dd></div>
+              <div className="flex justify-between gap-2"><dt className="text-ink-secondary shrink-0">Filière</dt><dd className="font-medium text-ink text-right break-words">{r.subject?.name}</dd></div>
               <div className="flex justify-between"><dt className="text-ink-secondary">Niveau</dt><dd>{r.level||'-'}</dd></div>
               <div className="flex justify-between"><dt className="text-ink-secondary">Semestre</dt><dd>{r.semester||'-'}</dd></div>
               <div className="flex justify-between"><dt className="text-ink-secondary">Année</dt><dd>{r.year||'-'}</dd></div>

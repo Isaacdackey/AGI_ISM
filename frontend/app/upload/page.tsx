@@ -114,9 +114,9 @@ export default function UploadPage() {
           </select>
         </div>
         <div>
-          <label htmlFor="up-subject" className="block text-[13px] font-medium text-ink mb-1">Matière *</label>
+          <label htmlFor="up-subject" className="block text-[13px] font-medium text-ink mb-1">Filière *</label>
           <select id="up-subject" required value={form.subjectId} onChange={e => setForm({ ...form, subjectId: e.target.value })} className="w-full border border-sand rounded-[8px] px-4 py-3 text-[13.5px] bg-surface min-h-[44px]">
-            <option value="">Choisir matière *</option>
+            <option value="">Choisir filière *</option>
             {subjects.map(s => <option key={s.id} value={s.id}>{s.name}</option>)}
           </select>
         </div>

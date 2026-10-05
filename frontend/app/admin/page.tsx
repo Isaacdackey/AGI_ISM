@@ -42,7 +42,7 @@ export default function AdminPage() {
   const [resSchool, setResSchool] = useState("");
   const [editing, setEditing] = useState<EditingResource | null>(null);
 
-  // Écoles / matières : édition inline
+  // Écoles / filières : édition inline
   const [editSchoolId, setEditSchoolId] = useState<string | null>(null);
   const [editSchool, setEditSchool] = useState({ name: "", description: "" });
   const [editSubjectId, setEditSubjectId] = useState<string | null>(null);
@@ -98,7 +98,7 @@ export default function AdminPage() {
   };
   const createSubject = async (e: React.FormEvent) => {
     e.preventDefault();
-    await doAction(() => api.createSubject(newSubject), "Matière créée.");
+    await doAction(() => api.createSubject(newSubject), "Filière créée.");
     setNewSubject({ name: "", slug: "", schoolId: "" });
   };
   const saveSchool = async (id: string) => {
@@ -110,12 +110,12 @@ export default function AdminPage() {
     doAction(() => api.deleteSchool(id), "École supprimée.");
   };
   const saveSubject = async (id: string) => {
-    await doAction(() => api.updateSubject(id, editSubject), "Matière modifiée.");
+    await doAction(() => api.updateSubject(id, editSubject), "Filière modifiée.");
     setEditSubjectId(null);
   };
   const delSubject = (id: string, name: string) => {
-    if (!window.confirm(`Supprimer la matière « ${name} » ? (Refusée si des ressources existent.)`)) return;
-    doAction(() => api.deleteSubject(id), "Matière supprimée.");
+    if (!window.confirm(`Supprimer la filière « ${name} » ? (Refusée si des ressources existent.)`)) return;
+    doAction(() => api.deleteSubject(id), "Filière supprimée.");
   };
 
   const saveResource = async () => {
@@ -173,7 +173,7 @@ export default function AdminPage() {
       {stats && (
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
           <div className="bg-surface rounded-[12px] border border-sand p-4 text-center"><div className="text-xl sm:text-2xl font-bold text-brand font-poppins">{stats.schools}</div><div className="text-[11.5px] text-ink-secondary">Écoles</div></div>
-          <div className="bg-surface rounded-[12px] border border-sand p-4 text-center"><div className="text-xl sm:text-2xl font-bold text-success font-poppins">{stats.subjects}</div><div className="text-[11.5px] text-ink-secondary">Matières</div></div>
+          <div className="bg-surface rounded-[12px] border border-sand p-4 text-center"><div className="text-xl sm:text-2xl font-bold text-success font-poppins">{stats.subjects}</div><div className="text-[11.5px] text-ink-secondary">Filières</div></div>
           <div className="bg-surface rounded-[12px] border border-sand p-4 text-center"><div className="text-xl sm:text-2xl font-bold text-ink font-poppins">{stats.resources}</div><div className="text-[11.5px] text-ink-secondary">Ressources</div></div>
           <div className="bg-surface rounded-[12px] border border-sand p-4 text-center"><div className="text-xl sm:text-2xl font-bold text-brand font-poppins">{stats.pending}</div><div className="text-[11.5px] text-ink-secondary">En attente</div></div>
         </div>
@@ -315,8 +315,8 @@ export default function AdminPage() {
         </div>
 
         <div className="bg-surface rounded-[12px] border border-sand p-4 sm:p-6 space-y-3 overflow-hidden">
-          <h3 className="font-semibold font-poppins text-[15px] text-ink">Matières</h3>
-          <label htmlFor="admin-subject-school" className="sr-only">Filtrer les matières par école</label>
+          <h3 className="font-semibold font-poppins text-[15px] text-ink">Filières</h3>
+          <label htmlFor="admin-subject-school" className="sr-only">Filtrer les filières par école</label>
           <select id="admin-subject-school" value={newSubject.schoolId} onChange={e => setNewSubject({ ...newSubject, schoolId: e.target.value })} className="w-full border border-sand rounded-[8px] px-3 py-2.5 text-[13.5px] bg-surface min-h-[44px]">
             <option value="">Toutes écoles</option>
             {schools.map(s => <option key={s.id} value={s.id}>{s.name}</option>)}
@@ -333,9 +333,9 @@ export default function AdminPage() {
                 </div>
                 {editSubjectId === s.id && (
                   <div className="flex flex-col gap-2 mt-2">
-                    <label htmlFor={`subject-name-${s.id}`} className="sr-only">Nom de la matière</label>
+                    <label htmlFor={`subject-name-${s.id}`} className="sr-only">Nom de la filière</label>
                     <input id={`subject-name-${s.id}`} value={editSubject.name} onChange={e => setEditSubject({ ...editSubject, name: e.target.value })} className="border border-sand rounded-[8px] px-3 py-2 text-[13.5px] min-h-[40px]" />
-                    <label htmlFor={`subject-desc-${s.id}`} className="sr-only">Description de la matière</label>
+                    <label htmlFor={`subject-desc-${s.id}`} className="sr-only">Description de la filière</label>
                     <input id={`subject-desc-${s.id}`} value={editSubject.description} onChange={e => setEditSubject({ ...editSubject, description: e.target.value })} className="border border-sand rounded-[8px] px-3 py-2 text-[13.5px] min-h-[40px]" />
                     <div className="flex gap-2">
                       <button onClick={() => saveSubject(s.id)} className="px-3 py-1.5 bg-inverse text-white rounded-full text-[12px] min-h-[36px]">OK</button>
@@ -348,12 +348,12 @@ export default function AdminPage() {
           </div>
           {user.role === 'ADMIN' && (
             <form onSubmit={createSubject} className="space-y-2 border-t border-sand pt-3">
-              <h4 className="font-semibold font-poppins text-[13.5px] text-ink">Créer une matière</h4>
-              <label htmlFor="new-subject-name" className="sr-only">Nom de la nouvelle matière</label>
+              <h4 className="font-semibold font-poppins text-[13.5px] text-ink">Créer une filière</h4>
+              <label htmlFor="new-subject-name" className="sr-only">Nom de la nouvelle filière</label>
               <input id="new-subject-name" required placeholder="Nom" value={newSubject.name} onChange={e => setNewSubject({ ...newSubject, name: e.target.value })} className="w-full border border-sand rounded-[8px] px-3 py-2.5 text-[13.5px] min-h-[44px]" />
-              <label htmlFor="new-subject-slug" className="sr-only">Slug de la nouvelle matière</label>
+              <label htmlFor="new-subject-slug" className="sr-only">Slug de la nouvelle filière</label>
               <input id="new-subject-slug" required placeholder="Slug (ex: maths-l1)" value={newSubject.slug} onChange={e => setNewSubject({ ...newSubject, slug: e.target.value })} className="w-full border border-sand rounded-[8px] px-3 py-2.5 text-[13.5px] min-h-[44px]" />
-              <button className="w-full bg-inverse text-white min-h-[44px] py-2 rounded-full text-[14px] font-semibold">Créer matière (école du filtre)</button>
+              <button className="w-full bg-inverse text-white min-h-[44px] py-2 rounded-full text-[14px] font-semibold">Créer filière (école du filtre)</button>
             </form>
           )}
         </div>

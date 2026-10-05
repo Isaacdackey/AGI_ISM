@@ -40,7 +40,7 @@ export default function Home() {
               <div className="w-10 h-10 rounded-[12px] flex items-center justify-center text-white mb-3" style={{background: s.color||'#C1502E'}}><GraduationCap className="w-5 h-5"/></div>
               <h3 className="font-poppins font-semibold text-[15px] text-ink group-hover:text-brand line-clamp-2">{s.name}</h3>
               <p className="text-[13.5px] text-ink-secondary line-clamp-2 mt-1 leading-[1.5]">{s.description}</p>
-              <div className="text-[11.5px] text-ink-secondary mt-3">{s._count?.subjects || 0} matières - {s._count?.resources || 0} ressources</div>
+              <div className="text-[11.5px] text-ink-secondary mt-3">{s._count?.subjects || 0} filières - {s._count?.resources || 0} ressources</div>
             </Link>
           ))}
         </div>
@@ -59,7 +59,7 @@ export default function Home() {
       <section className="bg-surface rounded-[12px] border border-sand p-4 sm:p-6 grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 text-center">
         <div><div className="w-12 h-12 mx-auto bg-sand-light rounded-[12px] flex items-center justify-center mb-2 border border-sand"><BookOpen className="w-[20px] h-[20px] text-brand"/></div><div className="font-bold text-ink text-xl font-poppins">{schools.length}</div><div className="text-[11.5px] text-ink-secondary">Ecoles</div></div>
         <div><div className="w-12 h-12 mx-auto bg-sand-light rounded-[12px] flex items-center justify-center mb-2 border border-sand"><FileText className="w-[20px] h-[20px] text-success"/></div><div className="font-bold text-ink text-xl font-poppins">{resources.length}+</div><div className="text-[11.5px] text-ink-secondary">Ressources</div></div>
-        <div><div className="w-12 h-12 mx-auto bg-sand-light rounded-[12px] flex items-center justify-center mb-2 border border-sand"><GraduationCap className="w-[20px] h-[20px] text-brand"/></div><div className="font-bold text-ink text-xl font-poppins">69</div><div className="text-[11.5px] text-ink-secondary">Matières officielles</div></div>
+        <div><div className="w-12 h-12 mx-auto bg-sand-light rounded-[12px] flex items-center justify-center mb-2 border border-sand"><GraduationCap className="w-[20px] h-[20px] text-brand"/></div><div className="font-bold text-ink text-xl font-poppins">69</div><div className="text-[11.5px] text-ink-secondary">Filières officielles</div></div>
         <div><div className="w-12 h-12 mx-auto bg-sand-light rounded-[12px] flex items-center justify-center mb-2 border border-sand"><Users className="w-[20px] h-[20px] text-ink"/></div><div className="font-bold text-ink text-xl font-poppins">AGI ISM</div><div className="text-[11.5px] text-ink-secondary">Dakar</div></div>
       </section>
     </div>

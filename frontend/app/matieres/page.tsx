@@ -21,15 +21,15 @@ export default function MatieresPage() {
   const visible = subjects.slice((safePage - 1) * limit, safePage * limit);
   return (
     <div className="space-y-6 overflow-hidden">
-      <Breadcrumbs items={[{label:"Accueil",href:"/"},{label:"Matières"}]} />
+      <Breadcrumbs items={[{label:"Accueil",href:"/"},{label:"Filières"}]} />
       <div className="flex flex-col sm:flex-row gap-3 sm:items-center justify-between">
-        <h1 className="text-[20px] sm:text-2xl font-bold text-ink font-poppins">Matières</h1>
+        <h1 className="text-[20px] sm:text-2xl font-bold text-ink font-poppins">Filières</h1>
         <select value={filterSchool} onChange={e=>setFilterSchool(e.target.value)} className="border border-sand rounded-full px-4 py-2 sm:py-2.5 text-[13.5px] bg-surface focus:border-terracotta-action outline-none min-h-[40px] w-full sm:w-auto">
           <option value="">Toutes écoles</option>
           {schools.map(s=><option key={s.id} value={s.id}>{s.name}</option>)}
         </select>
       </div>
-      <div className="text-[11.5px] text-ink-secondary">{subjects.length} matière(s) — page {safePage}/{totalPages}</div>
+      <div className="text-[11.5px] text-ink-secondary">{subjects.length} filière(s) — page {safePage}/{totalPages}</div>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
         {visible.map(s=>(
           <Link key={s.id} href={`/matieres/${s.slug}`} className="bg-surface rounded-[12px] border border-sand p-4 hover:shadow-sm hover:border-terracotta-action/20 transition overflow-hidden">
@@ -38,7 +38,7 @@ export default function MatieresPage() {
             <p className="text-[13.5px] text-ink-secondary mt-1 line-clamp-2 leading-[1.5]">{s.description}</p>
           </Link>
         ))}
-        {subjects.length===0 && <p className="text-[13.5px] text-ink-secondary col-span-full text-center py-8 bg-surface rounded-[12px] border border-sand">Aucune matière trouvée.</p>}
+        {subjects.length===0 && <p className="text-[13.5px] text-ink-secondary col-span-full text-center py-8 bg-surface rounded-[12px] border border-sand">Aucune filière trouvée.</p>}
       </div>
       {totalPages>1 && (
         <div className="flex gap-2 justify-center items-center flex-wrap">
