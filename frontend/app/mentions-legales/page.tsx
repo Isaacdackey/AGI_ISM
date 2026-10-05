@@ -10,13 +10,16 @@ export default function MentionsLegales() {
       <h1 className="text-[20px] font-bold font-poppins">Mentions légales</h1>
       <p className="text-ink-secondary">
         AGI ISM — Bibliothèque académique : plateforme de partage de ressources pédagogiques
-        (cours, TD, contrôles, examens, fiches de révision) du Groupe ISM, Dakar, Sénégal.
+        (cours, TD, contrôles, examens, fiches de révision), proposée par l&apos;Amicale
+        des Étudiants Gabonais de l&apos;ISM, Dakar, Sénégal.
         La consultation et le téléchargement sont libres et gratuits, sans compte.
       </p>
 
       <h2 className="font-semibold font-poppins text-[15px]">Éditeur &amp; responsable de publication</h2>
       <p>
-        Projet conçu et maintenu par <strong>Kazi&nbsp;Prod</strong>.
+        Exploitation : Amicale des Étudiants Gabonais de l&apos;ISM.
+        <br />
+        Conception et maintenance : <strong>Kazi&nbsp;Prod</strong>.
         <br />
         Instagram :{" "}
         <a href={INSTAGRAM_URL} target="_blank" rel="noopener noreferrer" className="text-terracotta hover:underline break-all">
