@@ -15,6 +15,7 @@ export default function ResourceDetail({ params }: { params: { slug: string } })
   const previewBlobRef = useRef<string | null>(null);
   const [previewError, setPreviewError] = useState<string | null>(null);
   const [previewLoading, setPreviewLoading] = useState(false);
+  const [downloading, setDownloading] = useState(false);
   // Tactile (téléphones/tablettes) uniquement : sur PC, le partage Windows
   // s'ouvrirait à la place du téléchargement direct.
   const [isTouch, setIsTouch] = useState(false);
@@ -46,7 +47,8 @@ export default function ResourceDetail({ params }: { params: { slug: string } })
   }, []);
 
   const handleDownload = async () => {
-    if (!r) return;
+    if (!r || downloading) return;
+    setDownloading(true);
     const url = resourceDownloadUrl(r.id);
     try {
       const res = await fetch(url, { credentials: 'include' as RequestCredentials });
@@ -78,6 +80,7 @@ export default function ResourceDetail({ params }: { params: { slug: string } })
       // Révocation différée : immédiate, certains navigateurs annulent le téléchargement.
       setTimeout(() => URL.revokeObjectURL(blobUrl), 4000);
     } catch { setPreviewError("Impossible de télécharger le document. Veuillez réessayer."); }
+    finally { setDownloading(false); }
   };
 
   if (!r) return <div className="py-10 text-center text-[13.5px] text-ink-secondary">Chargement...</div>;
@@ -103,7 +106,7 @@ export default function ResourceDetail({ params }: { params: { slug: string } })
             </div>
             {r.tags && r.tags.length > 0 && <div className="flex gap-1.5 mt-3 flex-wrap">{r.tags.map((t: string) => <span key={t} className="text-[11.5px] bg-gray-warm border border-sand px-2 py-1 rounded-full flex items-center gap-1 text-ink-secondary shrink-0"><Tag className="w-3 h-3 shrink-0" />{t}</span>)}</div>}
             <div className="flex flex-col sm:flex-row gap-3 mt-6">
-              <button onClick={handleDownload} className="bg-terracotta-action text-white px-5 sm:px-6 min-h-[44px] sm:min-h-[48px] h-auto py-3 rounded-full inline-flex items-center justify-center gap-2 font-semibold text-[14px] sm:text-[15px] hover:bg-terracotta-pressed transition w-full sm:w-auto leading-tight"><Download className="w-[16px] h-[16px] shrink-0" /> Télécharger</button>
+              <button onClick={handleDownload} disabled={downloading} aria-busy={downloading} className="bg-terracotta-action text-white px-5 sm:px-6 min-h-[44px] sm:min-h-[48px] h-auto py-3 rounded-full inline-flex items-center justify-center gap-2 font-semibold text-[14px] sm:text-[15px] hover:bg-terracotta-pressed transition w-full sm:w-auto leading-tight disabled:opacity-70">{downloading ? "Téléchargement…" : <><Download className="w-[16px] h-[16px] shrink-0" /> Télécharger</>}</button>
               <a href={previewBlob || resourcePreviewUrl(r.id)} target="_blank" rel="noopener noreferrer" className="border border-sand text-ink px-5 sm:px-6 min-h-[44px] sm:min-h-[48px] h-auto py-3 rounded-full inline-flex items-center justify-center gap-2 font-semibold text-[14px] sm:text-[15px] hover:border-terracotta-action hover:text-brand-pressed bg-surface transition w-full sm:w-auto leading-tight text-center"><Eye className="w-[16px] h-[16px] shrink-0" /> Aperçu</a>
             </div>
             {isTouch && (
