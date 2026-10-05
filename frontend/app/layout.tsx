@@ -1,19 +1,29 @@
 import "./globals.css";
 import Link from "next/link";
 import { AuthProvider } from "@/lib/auth";
+import { ThemeProvider } from "@/lib/theme";
 import { Header } from "@/components/Header";
 import { CONTACT_EMAIL } from "@/lib/contact";
+import type { Viewport } from "next";
 
 export const metadata = { title: "AGI ISM - Bibliothèque Académique", description: "Bibliothèque numérique du AGI ISM Dakar" };
 
+export const viewport: Viewport = {
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#FFFFFF" },
+    { media: "(prefers-color-scheme: dark)", color: "#171414" },
+  ],
+};
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="fr">
-      <body className="bg-white min-h-screen flex flex-col overflow-x-hidden">
+    <html lang="fr" suppressHydrationWarning>
+      <body className="bg-paper min-h-screen flex flex-col overflow-x-hidden">
+        <ThemeProvider>
         <AuthProvider>
           <Header />
           <main className="max-w-[1440px] mx-auto px-4 md:px-[24px] py-6 pb-8 w-full flex-1 min-w-0">{children}</main>
-          <footer className="mt-auto border-t border-sand bg-white">
+          <footer className="mt-auto border-t border-sand bg-surface">
             <div className="max-w-[1440px] mx-auto px-4 md:px-[24px] py-8 flex flex-col md:flex-row justify-between gap-6 text-[11.5px] text-ink-secondary">
               <div>
                 <div className="font-poppins font-semibold text-ink text-[13.5px]">AGI ISM</div>
@@ -32,6 +42,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             </div>
           </footer>
         </AuthProvider>
+        </ThemeProvider>
       </body>
     </html>
   );
