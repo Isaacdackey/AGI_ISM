@@ -83,7 +83,7 @@ export default function ResourceDetail({ params }: { params: { slug: string } })
   if (!r) return <div className="py-10 text-center text-[13.5px] text-ink-secondary">Chargement...</div>;
   return (
     <div className="space-y-6 overflow-hidden">
-      <Breadcrumbs items={[{ label: "Accueil", href: "/" }, { label: r.school?.name || "", href: `/ecoles/${r.school?.slug || ""}` }, { label: r.subject?.name || "", href: `/matieres/${r.subject?.slug || ""}` }, { label: r.type }, { label: r.title }]} />
+      <Breadcrumbs items={[{ label: "Accueil", href: "/" }, { label: r.school?.name || "", href: `/ecoles/${r.school?.slug || ""}` }, { label: r.subject?.name || "", href: `/filieres/${r.subject?.slug || ""}` }, { label: r.type }, { label: r.title }]} />
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6">
         <div className="lg:col-span-2 space-y-4 min-w-0">
           <div className="bg-surface rounded-[12px] border border-sand p-4 sm:p-6 overflow-hidden">

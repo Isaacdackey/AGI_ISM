@@ -18,8 +18,11 @@ const nextConfig = {
   // Recommandé en prod : NEXT_PUBLIC_API_URL=/api + BACKEND_URL défini
   // (rewrites => même origine, cookie first-party). L'URL absolue reste supportée.
   output: 'standalone',
-  async rewrites() {
-    const target = process.env.BACKEND_URL;
+  // Anciennes URLs /matieres (renommées /filieres) : redirection permanente.
+  async redirects() {
+    return [{ source: '/matieres/:path*', destination: '/filieres/:path*', permanent: true }];
+  },
+  async rewrites() {    const target = process.env.BACKEND_URL;
     if (target) return [{ source: '/api/:path*', destination: `${target}/api/:path*` }];
     if (!isProd) {
       return [{ source: '/api/:path*', destination: 'http://localhost:4000/api/:path*' }];

@@ -29,7 +29,7 @@ export default function SchoolDetail({ params }: { params: { slug: string } }) {
       <h2 className="text-[18px] sm:text-lg font-semibold text-ink font-poppins">Filières</h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
         {subjects.map(sub=>(
-          <Link key={sub.id} href={`/matieres/${sub.slug}`} className="bg-surface rounded-[12px] border border-sand p-4 hover:shadow-sm hover:border-terracotta-action/20 transition overflow-hidden">
+          <Link key={sub.id} href={`/filieres/${sub.slug}`} className="bg-surface rounded-[12px] border border-sand p-4 hover:shadow-sm hover:border-terracotta-action/20 transition overflow-hidden">
             <h3 className="font-semibold text-ink text-[15px] leading-tight line-clamp-2">{sub.name}</h3>
             <p className="text-[13.5px] text-ink-secondary line-clamp-2 mt-1 leading-[1.5]">{sub.description}</p>
             <div className="text-[11.5px] text-ink-secondary mt-2 flex items-center gap-1"><FileText className="w-3 h-3 shrink-0"/>{sub._count?.resources||0} ressources</div>

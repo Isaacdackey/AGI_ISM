@@ -27,7 +27,7 @@ export function Header() {
         </Link>
         <nav className="hidden md:flex items-center gap-6 ml-6 text-[13.5px] font-medium shrink-0">
           <Link href="/ecoles" className="hover:text-brand-pressed flex items-center gap-1.5 text-ink"><GraduationCap className="w-[16px] h-[16px]" /> Écoles</Link>
-          <Link href="/matieres" className="hover:text-brand-pressed flex items-center gap-1.5 text-ink"><BookOpen className="w-[16px] h-[16px]" /> Filières</Link>
+          <Link href="/filieres" className="hover:text-brand-pressed flex items-center gap-1.5 text-ink"><BookOpen className="w-[16px] h-[16px]" /> Filières</Link>
           <Link href="/ressources" className="hover:text-brand-pressed flex items-center gap-1.5 text-ink"><Library className="w-[16px] h-[16px]" /> Ressources</Link>
         </nav>
         <form onSubmit={onSearch} role="search" className="order-last md:order-none w-full md:flex-1 md:max-w-md md:ml-auto flex items-center bg-gray-warm rounded-[8px] px-3 py-2 md:py-1.5 border border-sand min-w-0">

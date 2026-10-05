@@ -32,7 +32,7 @@ export default function MatieresPage() {
       <div className="text-[11.5px] text-ink-secondary">{subjects.length} filière(s) — page {safePage}/{totalPages}</div>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
         {visible.map(s=>(
-          <Link key={s.id} href={`/matieres/${s.slug}`} className="bg-surface rounded-[12px] border border-sand p-4 hover:shadow-sm hover:border-terracotta-action/20 transition overflow-hidden">
+          <Link key={s.id} href={`/filieres/${s.slug}`} className="bg-surface rounded-[12px] border border-sand p-4 hover:shadow-sm hover:border-terracotta-action/20 transition overflow-hidden">
             <h3 className="font-semibold text-ink text-[15px] leading-tight line-clamp-2">{s.name}</h3>
             <p className="text-[11.5px] text-ink-secondary">{s.school?.name}</p>
             <p className="text-[13.5px] text-ink-secondary mt-1 line-clamp-2 leading-[1.5]">{s.description}</p>
