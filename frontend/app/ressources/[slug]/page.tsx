@@ -69,9 +69,14 @@ export default function ResourceDetail({ params }: { params: { slug: string } })
             return;
           }
         } catch (e) {
-          // Partage annulé par l'utilisateur : ne pas tomber sur l'ancre.
+          // Partage annulé par l'utilisateur : ne pas tomber sur le repli.
           if ((e as Error)?.name === 'AbortError') return;
         }
+        // Repli tactile SANS nouvel onglet : navigation directe vers l'URL de
+        // téléchargement (Content-Disposition: attachment côté API/R2), le
+        // navigateur gère le fichier au lieu d'ouvrir un onglet d'aperçu.
+        window.location.href = url;
+        return;
       }
       const blobUrl = URL.createObjectURL(blob);
       const a = document.createElement('a');
